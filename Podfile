@@ -7,4 +7,5 @@ pod 'Firebase/Storage'
   pod 'Firebase/Database'
   pod 'Firebase/Core'
   pod 'JSQMessagesViewController'
+  pod 'SVProgressHUD'
 end

@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import SVProgressHUD
 
 enum Section: Int {
     case createNewChannelSection = 0
@@ -33,10 +34,17 @@ class ChannelListViewController: UITableViewController {
     private var channelRefHandle: DatabaseHandle?
     
     
+    @IBOutlet weak var channelTableView: UITableView!
     // MARK: View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
+        tap.cancelsTouchesInView = false
+        self.view.addGestureRecognizer(tap)
+
         title = "NUSChat"
+        SVProgressHUD.show()
         observeChannels()
         
     }
@@ -48,6 +56,11 @@ class ChannelListViewController: UITableViewController {
         }
     }
     
+    //TODO: Declare tableViewTapped here:
+    func tableViewTapped() {
+        newChannelTextField?.endEditing(true)
+    }
+    
     
     // MARK: Firebase related methods
     private func observeChannels() {
@@ -55,6 +68,7 @@ class ChannelListViewController: UITableViewController {
         
         // call observe:with: on your channel reference, storing a handle to the reference. This calls the completion block every time a new channel is added to your database.
         channelRefHandle = channelRef.observe(.childAdded, with: { (snapshot) in
+            
             //The completion receives a DataSnapshot (stored in snapshot), which contains the data and other helpful methods.
             let channelData = snapshot.value as! Dictionary<String, AnyObject>
             let id = snapshot.key
@@ -62,6 +76,7 @@ class ChannelListViewController: UITableViewController {
             if let name = channelData["name"] as! String!, name.characters.count > 0 {
                 self.channels.append(Channel(id: id, name: name))
                 self.tableView.reloadData()
+                SVProgressHUD.dismiss()
             }else {
                 print("Error! Could not decode channel data")
             }

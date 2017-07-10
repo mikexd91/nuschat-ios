@@ -59,7 +59,11 @@ final class ChatViewController: JSQMessagesViewController {
     self.senderId = Auth.auth().currentUser?.uid
     collectionView!.collectionViewLayout.incomingAvatarViewSize = CGSize.zero
     collectionView!.collectionViewLayout.outgoingAvatarViewSize = CGSize.zero
-    observeMessages()	
+    observeMessages()
+//    let tapGesture = UITapGestureRecognizer(target:
+//        self, action:#selector(tableViewTapped))
+//    collectionView.addGestureRecognizer(tapGesture)
+
   }
   
   override func viewDidAppear(_ animated: Bool) {
@@ -76,7 +80,7 @@ final class ChatViewController: JSQMessagesViewController {
             messageRef.removeObserver(withHandle: refHandle)
         }
     }
-  
+    
   // MARK: Collection view data source (and related) methods
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, messageDataForItemAt indexPath: IndexPath!) -> JSQMessageData! {
         return messages[indexPath.item]
