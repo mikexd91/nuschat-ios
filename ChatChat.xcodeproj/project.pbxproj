@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1A285AE4682F5EF4BA1D09DE /* Pods_ChatChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABDE423A04622BFED51C492F /* Pods_ChatChat.framework */; };
 		202755B41F0BD0B4002C2807 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 202755B31F0BD0B4002C2807 /* GoogleService-Info.plist */; };
+		20662A151F14A85D002A7489 /* SetUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20662A141F14A85C002A7489 /* SetUserViewController.swift */; };
 		459780D31D6465FB007BE66F /* UIImage+Gif.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459780D21D6465FB007BE66F /* UIImage+Gif.swift */; };
 		459E535F1D4BF36A00E675A5 /* License in Resources */ = {isa = PBXBuildFile; fileRef = 459E535E1D4BF36A00E675A5 /* License */; };
 		45A0D8FA1D49419500F26729 /* ChannelListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A0D8F91D49419500F26729 /* ChannelListViewController.swift */; };
@@ -25,6 +26,7 @@
 /* Begin PBXFileReference section */
 		1FF7EA5C69CFB0AFCC0067BA /* Pods-ChatChat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatChat.release.xcconfig"; path = "Pods/Target Support Files/Pods-ChatChat/Pods-ChatChat.release.xcconfig"; sourceTree = "<group>"; };
 		202755B31F0BD0B4002C2807 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		20662A141F14A85C002A7489 /* SetUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetUserViewController.swift; sourceTree = "<group>"; };
 		4570C5E21D54FD11007946D9 /* ChatChat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ChatChat.entitlements; sourceTree = "<group>"; };
 		459780D21D6465FB007BE66F /* UIImage+Gif.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Gif.swift"; sourceTree = "<group>"; };
 		459E535E1D4BF36A00E675A5 /* License */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = License; sourceTree = "<group>"; };
@@ -120,6 +122,7 @@
 			isa = PBXGroup;
 			children = (
 				BB53557B1BEF765800321277 /* LoginViewController.swift */,
+				20662A141F14A85C002A7489 /* SetUserViewController.swift */,
 				45A0D8F91D49419500F26729 /* ChannelListViewController.swift */,
 				BB53558E1BEF7E9700321277 /* ChatViewController.swift */,
 			);
@@ -280,6 +283,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				20662A151F14A85D002A7489 /* SetUserViewController.swift in Sources */,
 				BB53557C1BEF765800321277 /* LoginViewController.swift in Sources */,
 				45A0D9011D4BB5E900F26729 /* Channel.swift in Sources */,
 				459780D31D6465FB007BE66F /* UIImage+Gif.swift in Sources */,

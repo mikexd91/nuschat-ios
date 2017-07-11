@@ -8,4 +8,5 @@ pod 'Firebase/Storage'
   pod 'Firebase/Core'
   pod 'JSQMessagesViewController'
   pod 'SVProgressHUD'
+  pod 'GoogleSignIn'
 end
