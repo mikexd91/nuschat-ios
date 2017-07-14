@@ -28,6 +28,7 @@ final class ChatViewController: JSQMessagesViewController {
     var messages = [JSQMessage]()
     
     private lazy var messageRef: DatabaseReference = self.channelRef!.child("messages")
+    private lazy var channelLastMsgRef: DatabaseReference = self.channelRef!
     private var newMessageRefHandle: DatabaseHandle?
     
     //Create a Firebase reference that tracks whether the local user is typing.
@@ -184,6 +185,19 @@ final class ChatViewController: JSQMessagesViewController {
         //You then play the canonical “message sent” sound.
         //JSQSystemSoundPlayer.jsq_playMessageSentSound()
         //Finally, complete the “send” action and reset the input toolbar to empty.
+        
+        //add last message
+        self.channelLastMsgRef.observeSingleEvent(of: .value, with: { (snapshot) in
+            print(snapshot.value!)
+            let lastMessageUpdate = ["/lastMessage": text]
+            let lastMessageSenderUpdate = ["/lastMessageSender": senderDisplayName]
+            let lastMessageSenderIdUpdate = ["/lastMessageSenderId": senderId]
+            self.channelLastMsgRef.updateChildValues(lastMessageUpdate)
+            self.channelLastMsgRef.updateChildValues(lastMessageSenderUpdate)
+            self.channelLastMsgRef.updateChildValues(lastMessageSenderIdUpdate)
+        })
+        
+//        channelLastMsgRef.setValue(messageItem)
         finishSendingMessage()
         isTyping = false
     }
@@ -205,11 +219,11 @@ final class ChatViewController: JSQMessagesViewController {
                 self.finishReceivingMessage()
             }else if let id = messageData["senderId"] as String!,
                 // 1 First, check to see if you have a photoURL set.
-                let photoURL = messageData["photoURL"] as String! { // 1
+                let photoURL = messageData["photoURL"] as String!, let senderName = messageData["senderName"] as String! { // 1
                 // 2 If so, create a new JSQPhotoMediaItem. This object encapsulates rich media in messages — exactly what you need here!
                 if let mediaItem = JSQPhotoMediaItem(maskAsOutgoing: id == self.senderId) {
                     // 3 With that media item, call addPhotoMessage
-                    self.addPhotoMessage(withId: id, key: snapshot.key, mediaItem: mediaItem)
+                    self.addPhotoMessage(withId: id, key: snapshot.key, mediaItem: mediaItem, senderName: senderName)
                     // 4 Finally, check to make sure the photoURL contains the prefix for a Firebase Storage object. If so, fetch the image data.
                     if photoURL.hasPrefix("gs://") {
                         self.fetchImageDataAtURL(photoURL, forMediaItem: mediaItem, clearsPhotoMessageMapOnSuccessForKey: nil)
@@ -294,6 +308,7 @@ final class ChatViewController: JSQMessagesViewController {
         let messageItem = [
             "photoURL": imageURLNotSetKey,
             "senderId": senderId,
+            "senderName" : senderDisplayName
         ]
         
         itemRef.setValue(messageItem)
@@ -303,8 +318,8 @@ final class ChatViewController: JSQMessagesViewController {
         return itemRef.key
     }
     
-    private func addPhotoMessage(withId id: String, key: String, mediaItem: JSQPhotoMediaItem) {
-        if let message = JSQMessage(senderId: id, displayName: "", media: mediaItem) {
+    private func addPhotoMessage(withId id: String, key: String, mediaItem: JSQPhotoMediaItem, senderName: String) {
+        if let message = JSQMessage(senderId: id, displayName: senderName, media: mediaItem) {
             messages.append(message)
             
             if (mediaItem.image == nil) {

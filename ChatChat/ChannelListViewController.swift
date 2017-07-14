@@ -33,6 +33,8 @@ class ChannelListViewController: UITableViewController {
     //hold a handle to the reference so you can remove it later on.
     private var channelRefHandle: DatabaseHandle?
     
+    private lazy var userRef: DatabaseReference = Database.database().reference().child("users")
+    
     
     @IBOutlet weak var channelTableView: UITableView!
     // MARK: View Lifecycle
@@ -42,8 +44,10 @@ class ChannelListViewController: UITableViewController {
         let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
         tap.cancelsTouchesInView = false
         self.view.addGestureRecognizer(tap)
-
-        title = "NUSChat"
+        
+        title = "nuschat"
+        
+        
         SVProgressHUD.show()
         observeChannels()
         
@@ -64,22 +68,26 @@ class ChannelListViewController: UITableViewController {
     
     // MARK: Firebase related methods
     private func observeChannels() {
+        let uid = Auth.auth().currentUser?.uid
+        channelRefHandle = userRef.child(uid!).child("username").observe(.value, with: { (snapshot) in
+            self.senderDisplayName = snapshot.value! as? String
+        })
+        
         //use the observe methods to listen for new channel channels being written to the Firebase DB
         
         // call observe:with: on your channel reference, storing a handle to the reference. This calls the completion block every time a new channel is added to your database.
-        channelRefHandle = channelRef.observe(.childAdded, with: { (snapshot) in
-            
+        channelRefHandle = channelRef.observe(.value, with: { (snapshot) in
+            var newChannels: [Channel] = []
             //The completion receives a DataSnapshot (stored in snapshot), which contains the data and other helpful methods.
-            let channelData = snapshot.value as! Dictionary<String, AnyObject>
-            let id = snapshot.key
-            //You pull the data out of the snapshot and, if successful, create a Channel model and add it to your channels array.
-            if let name = channelData["name"] as! String!, name.characters.count > 0 {
-                self.channels.append(Channel(id: id, name: name))
-                self.tableView.reloadData()
-                SVProgressHUD.dismiss()
-            }else {
-                print("Error! Could not decode channel data")
+            print(snapshot.value)
+            for item in snapshot.children{
+                let channelItem = Channel(snapshot: item as! DataSnapshot)
+                newChannels.append(channelItem)
             }
+            self.channels = newChannels
+            self.tableView.reloadData()
+            SVProgressHUD.dismiss()
+            
         })
     }
     
@@ -105,8 +113,20 @@ class ChannelListViewController: UITableViewController {
         }
     }
     
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if (indexPath as NSIndexPath).section == Section.createNewChannelSection.rawValue {
+            return 44
+        }
+        return 70
+    }
+    //
+    //    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+    //        return 100
+    //    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         //Define what goes in each cell. For the first section, you store the text field from the cell in your newChannelTextField property. For the second section, you just set the cell’s text label as your channel name
+        let lastMessage: String
         let reuseIdentifier = (indexPath as NSIndexPath).section == Section.createNewChannelSection.rawValue ? "NewChannel" : "ExistingChannel"
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
         
@@ -115,10 +135,43 @@ class ChannelListViewController: UITableViewController {
                 newChannelTextField = createNewChannelCell.newChannelNameField
             }
         }else if (indexPath as NSIndexPath).section == Section.currentChannelSection.rawValue {
-            cell.textLabel?.text = channels[(indexPath as NSIndexPath).row].name
+            if let createCurrentCell = cell as? ChannelListTableViewCell {
+                createCurrentCell.channelTitle.text = channels[(indexPath as NSIndexPath).row].name
+                
+                if channels[(indexPath as NSIndexPath).row].lastMessage != ""{
+                    if channels[(indexPath as NSIndexPath).row].lastMessageSenderId == Auth.auth().currentUser?.uid {
+                        lastMessage = "You: \(channels[(indexPath as NSIndexPath).row].lastMessage)"
+                    }else{
+                        lastMessage =  "\(channels[(indexPath as NSIndexPath).row].lastMessageSender): \(channels[(indexPath as NSIndexPath).row].lastMessage)"
+                    }
+                }else {
+                    lastMessage = ""
+                }
+                createCurrentCell.channelLastMsg.text = lastMessage
+                
+                createCurrentCell.channelPhoto.layer.cornerRadius = (createCurrentCell.channelPhoto.frame.width / 2) //instead of let radius = CGRectGetWidth(self.frame) / 2
+                createCurrentCell.channelPhoto.layer.masksToBounds = true
+            }
         }
         return cell
     }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        let userid = Auth.auth().currentUser?.uid
+        let channel = channels[(indexPath as NSIndexPath).row]
+        
+        if userid == channel.createdBy {
+            print("xunda hereeee")
+            if editingStyle == .delete {
+                print(channel.ref)
+                channel.ref?.removeValue()
+                observeChannels()
+            }
+        }
+        
+    }
+    
+    
     
     // MARK: UITableViewDelegate
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -126,21 +179,32 @@ class ChannelListViewController: UITableViewController {
         if indexPath.section == Section.currentChannelSection.rawValue {
             let channel = channels[(indexPath as NSIndexPath).row]
             self.performSegue(withIdentifier: "ShowChannel", sender: channel)
+        }else{
+            print("not currentChannel")
         }
     }
+    
     
     // MARK :Actions
     @IBAction func createChannel(_ sender: Any) {
         //First check if you have a channel name in the text field.
-        if let name = newChannelTextField?.text {
+        if let name = newChannelTextField?.text?.trimmingCharacters(in: .whitespacesAndNewlines), !name.isEmpty {
             //Create a new channel reference with a unique key using childByAutoId().
             let newChannelRef = channelRef.childByAutoId()
             //Create a dictionary to hold the data for this channel. A [String: AnyObject] works as a JSON-like object.
-            let channelItem = ["name": name]
+            let uid = Auth.auth().currentUser?.uid
+            let channelItem = ["name": name,
+                               "createdBy": uid,
+                               "lastMessage":"",
+                               "lastMessageSender":"",
+                               "lastMessageSenderId":""]
             //Finally, set the name on this new channel, which is saved to Firebase automatically!
             newChannelRef.setValue(channelItem)
+            newChannelTextField?.text=""
+        }else{
+            newChannelTextField?.text=""
         }
-
+        
     }
     
     // MARK: Navigation
@@ -152,7 +216,8 @@ class ChannelListViewController: UITableViewController {
             chatVc.senderDisplayName = senderDisplayName
             chatVc.channel = channel
             chatVc.channelRef = channelRef.child(channel.id)
+            chatVc.hidesBottomBarWhenPushed = true
         }
     }
-
+    
 }

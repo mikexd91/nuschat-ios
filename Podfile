@@ -9,4 +9,6 @@ pod 'Firebase/Storage'
   pod 'JSQMessagesViewController'
   pod 'SVProgressHUD'
   pod 'GoogleSignIn'
+  pod 'Fabric'
+  pod 'Crashlytics'
 end
