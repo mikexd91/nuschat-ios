@@ -1,5 +1,5 @@
 //
-//  ChannelListViewController.swift
+//  ContactsViewController.swift
 //  nuschat
 //
 //  Created by Mike Zhang Xunda on 4/7/17.
@@ -15,10 +15,9 @@ enum Sections: Int {
     case contactSection
 }
 
-class ContactsViewController: UITableViewController {
+class ContactsViewController: UITableViewController, UISearchBarDelegate {
     
-    var searchField: UISearchBar?
-    
+    var searchField: UISearchBar = UISearchBar()
     //Create an empty array of Channel objects to store your channels.
     private var channels: [Channel] = []
     
@@ -30,14 +29,18 @@ class ContactsViewController: UITableViewController {
     
     //Create an empty array of Channel objects to store your channels.
     private var contacts: [Contacts] = []
+    var filteredContacts = [Contacts]()
+    var inSearchMode = false
     
     //used to store a reference to the list of channels in the database
     private lazy var userRef: DatabaseReference = Database.database().reference().child("users")
     
+    private lazy var onlineRef: DatabaseReference = Database.database().reference().child("online")
+    
     //hold a handle to the reference so you can remove it later on.
     private var userRefHandle: DatabaseHandle?
     
-    
+    var userCountBarButtonItem : UIBarButtonItem!
     // MARK: View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,10 +49,46 @@ class ContactsViewController: UITableViewController {
         tap.cancelsTouchesInView = false
         self.view.addGestureRecognizer(tap)
         
-        title = "contacts"
+        searchField.searchBarStyle = UISearchBarStyle.prominent
+        searchField.placeholder = " Search Contacts..."
+        searchField.sizeToFit()
+        searchField.isTranslucent = false
+        searchField.backgroundImage = UIImage()
+        searchField.delegate = self
+        searchField.returnKeyType = UIReturnKeyType.done
+        tableView.tableHeaderView = searchField
+        
+        userCountBarButtonItem = UIBarButtonItem(title: "1",
+                                                 style: .plain,
+                                                 target: self,
+                                                 action: #selector(userCountButtonDidTouch))
+        
+        userCountBarButtonItem.tintColor = self.view.tintColor
+        navigationItem.rightBarButtonItem = userCountBarButtonItem
+        
+        title = "#contacts"
         
         SVProgressHUD.show()
+        
+        Auth.auth().addStateDidChangeListener { auth, user in
+            guard let user = user else { return }
+            // 1 Create a child reference using a user’s uid, which is generated when Firebase creates an account.
+            let currentUserRef = self.onlineRef.child(user.uid)
+            // 2 Use this reference to save the current user’s email.
+            currentUserRef.setValue(user.email)
+            // 3 Call onDisconnectRemoveValue() on currentUserRef. This removes the value at the reference’s location after the connection to Firebase closes, for instance when a user quits your app. This is perfect for monitoring users who have gone offline.
+            currentUserRef.onDisconnectRemoveValue()
+        }
+        
         observeContacts()
+        
+        onlineRef.observe(.value, with: { snapshot in
+            if snapshot.exists() {
+                self.userCountBarButtonItem?.title = "\(snapshot.childrenCount.description) Online"
+            } else {
+                self.userCountBarButtonItem?.title = "0 Online"
+            }
+        })
         
     }
     
@@ -62,7 +101,7 @@ class ContactsViewController: UITableViewController {
     
     //TODO: Declare tableViewTapped here:
     func tableViewTapped() {
-        searchField?.endEditing(true)
+        searchField.endEditing(true)
     }
     
     
@@ -85,26 +124,24 @@ class ContactsViewController: UITableViewController {
         })
     }
     
-    
+    func userCountButtonDidTouch() {
+//        performSegue(withIdentifier: listToUsers, sender: nil)
+    }
     
     // MARK: UITableViewDataSource
     override func numberOfSections(in tableView: UITableView) -> Int {
         //Set the number of sections. The first section will include a form for adding new channels, and the second section will show a list of channels.
-        return 2
+        return 1
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //Set the number of rows for each section. This is always 1 for the first section, and the number of channels for the second section.
-        if let currentSection: Sections = Sections(rawValue: section) {
-            switch currentSection {
-            case .searchSection:
-                return 1
-            case .contactSection:
-                return contacts.count
-            }
-        } else {
-            return 0
-        }
+
+      if inSearchMode{
+          return filteredContacts.count
+      }else {
+        return contacts.count
+       }
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -117,25 +154,44 @@ class ContactsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         //Define what goes in each cell. For the first section, you store the text field from the cell in your newChannelTextField property. For the second section, you just set the cell’s text label as your channel name
         
-        let reuseIdentifier = (indexPath as NSIndexPath).section == Sections.searchSection.rawValue ? "SearchContactsCell" : "ContactsCell"
+        let reuseIdentifier = "ContactsCell"
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
         
-        if (indexPath as NSIndexPath).section == Sections.searchSection.rawValue {
-            if let searchCell = cell as? SearchContactsTableViewCell {
-                searchField = searchCell.searchContactBar
-            }
-        }else if (indexPath as NSIndexPath).section == Sections.contactSection.rawValue {
             if let contactCell = cell as? ContactsListTableViewCell {
                 if let createCurrentCell = cell as? ContactsListTableViewCell {
-                    createCurrentCell.profileName.text = contacts[(indexPath as NSIndexPath).row].username
-                    createCurrentCell.profileStatus.text = contacts[(indexPath as NSIndexPath).row].onlineStatus
-                    
+                    let user: Contacts!
+                    if inSearchMode{
+                        user = filteredContacts[(indexPath as NSIndexPath).row]
+                    }else{
+                        user = contacts[(indexPath as NSIndexPath).row]
+                    }
+                    createCurrentCell.profileName.text = user.username
+                    createCurrentCell.profileStatus.text = user.onlineStatus
                     createCurrentCell.profilePhoto.layer.cornerRadius = (createCurrentCell.profilePhoto.frame.width / 2)
                     createCurrentCell.profilePhoto.layer.masksToBounds = true
                 }
             }
-        }
+        
         return cell
+    }
+    
+    // MARK: search table
+    func searchBarSearchButtonClicked(_ searchField: UISearchBar) {
+        view.endEditing(true)
+    }
+    
+    func searchBar(_ searchField: UISearchBar, textDidChange searchText: String) {
+        if searchField.text == nil || searchField.text == "" {
+            inSearchMode = false
+            tableView.reloadData()
+            view.endEditing(true)
+        }else {
+            inSearchMode = true
+            let lower = searchField.text?.lowercased()
+            //$0 place holder
+            filteredContacts = contacts.filter({$0.username?.range(of: lower!) != nil})
+            tableView.reloadData()
+        }
     }
     
 }

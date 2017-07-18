@@ -15,6 +15,7 @@ import GoogleSignIn
 class LoginViewController: UIViewController, GIDSignInUIDelegate {
     
     private lazy var userRef: DatabaseReference = Database.database().reference().child("users")
+    let kUserDefault = UserDefaults.standard
     
     @IBOutlet weak var bottomLayoutGuideConstraint: NSLayoutConstraint!
     @IBOutlet weak var loginView: UIView!
@@ -52,6 +53,11 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate {
     override func viewDidLoad() {
         GIDSignIn.sharedInstance().uiDelegate = self
         //        GIDSignIn.sharedInstance().signIn()
+
+        if kUserDefault.bool(forKey: "isGoogleSignIn") {
+            googleSignIn.isEnabled = false
+            GIDSignIn.sharedInstance().signIn()
+        }
     }
     
     

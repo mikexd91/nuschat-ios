@@ -19,6 +19,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>IGIdenticon.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>JSQMessagesViewController.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -29,7 +34,7 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods-ChatChat.xcscheme</key>
+		<key>Pods-nuschat.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -52,6 +57,16 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>6BB7C7B8559B9101F2990DCA42C87D7E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>917B4A5F2504991DB0258528AD50172D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>B1C4AAFAF49036C7007633DAA3C806AD</key>
 		<dict>
 			<key>primary</key>
@@ -67,12 +82,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>F7AE9E633327DBAB244E0E800242608A</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>FF97F54540332CDD640E38740D549A94</key>
+		<key>EE3D93250E33C01989B1FF4AEDF6C618</key>
 		<dict>
 			<key>primary</key>
 			<true/>

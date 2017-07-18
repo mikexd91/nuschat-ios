@@ -13,7 +13,7 @@
         <!--Login View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="LoginViewController" customModule="ChatChat" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="LoginViewController" customModule="nuschat" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -43,6 +43,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8bR-eQ-2a2">
                                 <rect key="frame" x="78" y="544" width="219" height="50"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <accessibility key="accessibilityConfiguration" identifier="googleLogin"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="iKs-O0-Kph"/>
                                     <constraint firstAttribute="width" constant="219" id="zDV-W8-Ore"/>
@@ -90,37 +91,14 @@
         <!--Contacts View Controller-->
         <scene sceneID="AYY-ci-iVS">
             <objects>
-                <tableViewController id="mrf-ch-wbH" customClass="ContactsViewController" customModule="ChatChat" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="mrf-ch-wbH" customClass="ContactsViewController" customModule="nuschat" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="CUe-Wh-DCa">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SearchContactsCell" id="uUH-MJ-708" customClass="SearchContactsTableViewCell" customModule="ChatChat" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uUH-MJ-708" id="xwD-dr-mhe">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <searchBar contentMode="redraw" text="" placeholder="Search for contacts" translatesAutoresizingMaskIntoConstraints="NO" id="HdU-ZI-hc5">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
-                                            <textInputTraits key="textInputTraits"/>
-                                        </searchBar>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstAttribute="trailing" secondItem="HdU-ZI-hc5" secondAttribute="trailing" id="3G7-wv-mLO"/>
-                                        <constraint firstItem="HdU-ZI-hc5" firstAttribute="leading" secondItem="xwD-dr-mhe" secondAttribute="leading" id="Ays-bo-OCl"/>
-                                        <constraint firstItem="HdU-ZI-hc5" firstAttribute="top" secondItem="xwD-dr-mhe" secondAttribute="top" id="FFJ-U6-wbI"/>
-                                        <constraint firstAttribute="bottom" secondItem="HdU-ZI-hc5" secondAttribute="bottom" id="s98-to-rXd"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="searchContactBar" destination="HdU-ZI-hc5" id="uCB-zy-9rE"/>
-                                </connections>
-                            </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ContactsCell" rowHeight="50" id="k1f-V0-1zG" customClass="ContactsListTableViewCell" customModule="ChatChat" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="72" width="375" height="50"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ContactsCell" rowHeight="50" id="k1f-V0-1zG" customClass="ContactsListTableViewCell" customModule="nuschat" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="k1f-V0-1zG" id="jHq-s1-awt">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="49.5"/>
@@ -179,15 +157,13 @@
                                 </connections>
                             </tableViewCell>
                         </prototypes>
+                        <sections/>
                         <connections>
                             <outlet property="dataSource" destination="mrf-ch-wbH" id="OUy-vk-fcA"/>
                             <outlet property="delegate" destination="mrf-ch-wbH" id="luo-VQ-HL5"/>
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="xem-8u-hYd"/>
-                    <connections>
-                        <outlet property="searchDisplayController" destination="uVj-v3-nEQ" id="Pbu-Yn-5rd"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oGU-ar-yzo" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <searchDisplayController id="uVj-v3-nEQ">
@@ -201,13 +177,13 @@
         <!--Channel List View Controller-->
         <scene sceneID="bg1-OT-nd2">
             <objects>
-                <tableViewController id="x2j-kb-5mV" customClass="ChannelListViewController" customModule="ChatChat" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="x2j-kb-5mV" customClass="ChannelListViewController" customModule="nuschat" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="JJM-X8-sVb">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NewChannel" id="cRS-Ja-ufu" customClass="CreateChannelCell" customModule="ChatChat" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NewChannel" id="cRS-Ja-ufu" customClass="CreateChannelCell" customModule="nuschat" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cRS-Ja-ufu" id="zqp-en-ts1">
@@ -249,7 +225,7 @@
                                     <segue destination="IHh-zK-Dgq" kind="show" identifier="ShowChannel" id="Fx3-6W-dIy"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ExistingChannel" rowHeight="70" id="m4f-vC-RT4" customClass="ChannelListTableViewCell" customModule="ChatChat" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ExistingChannel" rowHeight="70" id="m4f-vC-RT4" customClass="ChannelListTableViewCell" customModule="nuschat" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="72" width="375" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="m4f-vC-RT4" id="mhf-iw-vvI">
@@ -326,100 +302,35 @@
         <!--Settings Table View Controller-->
         <scene sceneID="Md5-g9-S3g">
             <objects>
-                <tableViewController id="pGC-Rd-vLd" customClass="SettingsTableViewController" customModule="ChatChat" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="5pL-Y8-UOq">
+                <tableViewController id="pGC-Rd-vLd" customClass="SettingsTableViewController" customModule="nuschat" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="5pL-Y8-UOq">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.96966144239999996" green="1" blue="0.9669689709" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <sections>
-                            <tableViewSection headerTitle="General" id="QVL-mh-lCa">
+                            <tableViewSection headerTitle="Account" id="QVL-mh-lCa">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="VVX-dx-qWr">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="34" id="VVX-dx-qWr">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="34"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="VVX-dx-qWr" id="f1d-dh-FIh">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="34"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sign Out" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EmE-Vz-Bg1">
-                                                    <rect key="frame" x="154" y="11" width="66.5" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sign Out" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EmE-Vz-Bg1">
+                                                    <rect key="frame" x="15" y="5" width="66.5" height="24"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="15"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="EmE-Vz-Bg1" firstAttribute="centerX" secondItem="f1d-dh-FIh" secondAttribute="centerX" id="Jk3-jH-AxE"/>
-                                                <constraint firstItem="EmE-Vz-Bg1" firstAttribute="centerY" secondItem="f1d-dh-FIh" secondAttribute="centerY" id="LgZ-HF-jIG"/>
+                                                <constraint firstAttribute="trailing" secondItem="EmE-Vz-Bg1" secondAttribute="trailing" constant="293.5" id="5Dh-O2-71Q"/>
+                                                <constraint firstItem="EmE-Vz-Bg1" firstAttribute="leading" secondItem="f1d-dh-FIh" secondAttribute="leading" constant="15" id="BEK-j4-arx"/>
+                                                <constraint firstItem="EmE-Vz-Bg1" firstAttribute="top" secondItem="f1d-dh-FIh" secondAttribute="top" constant="5" id="Qej-yA-azk"/>
+                                                <constraint firstItem="EmE-Vz-Bg1" firstAttribute="leading" secondItem="f1d-dh-FIh" secondAttribute="leading" constant="15" id="aeH-Ur-EP1"/>
+                                                <constraint firstAttribute="bottom" secondItem="EmE-Vz-Bg1" secondAttribute="bottom" constant="5" id="stk-Dt-pJN"/>
                                             </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="dTZ-P5-QW2">
-                                        <rect key="frame" x="0.0" y="72" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dTZ-P5-QW2" id="DGb-42-CJE">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                            <tableViewSection headerTitle="Audio Settings" id="LRP-61-eil">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Swa-0K-03N">
-                                        <rect key="frame" x="0.0" y="144" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Swa-0K-03N" id="gcK-y6-qqc">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="aQs-Be-ssK">
-                                        <rect key="frame" x="0.0" y="188" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aQs-Be-ssK" id="zsw-Ve-nqA">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                            <tableViewSection headerTitle="Section-3" id="I3h-Tz-NSj">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="tkX-y4-Vqu">
-                                        <rect key="frame" x="0.0" y="260" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tkX-y4-Vqu" id="6Rl-q8-g6g">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Aoa-BE-c79">
-                                        <rect key="frame" x="0.0" y="304" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Aoa-BE-c79" id="U04-5V-32X">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                            <tableViewSection headerTitle="Section-4" id="q8l-C0-0vZ">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Gvo-v0-iaP">
-                                        <rect key="frame" x="0.0" y="376" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Gvo-v0-iaP" id="wqq-ix-3Xn">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="3Me-gr-cjQ">
-                                        <rect key="frame" x="0.0" y="420" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3Me-gr-cjQ" id="vjG-uO-hPQ">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
@@ -443,7 +354,7 @@
         <!--Chat View Controller-->
         <scene sceneID="fNE-JP-QV9">
             <objects>
-                <viewController hidesBottomBarWhenPushed="YES" id="IHh-zK-Dgq" customClass="ChatViewController" customModule="ChatChat" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController hidesBottomBarWhenPushed="YES" id="IHh-zK-Dgq" customClass="ChatViewController" customModule="nuschat" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="gTb-3o-Wit"/>
                         <viewControllerLayoutGuide type="bottom" id="fAp-tJ-32e"/>
@@ -464,7 +375,7 @@
         <!--Set User View Controller-->
         <scene sceneID="o2S-OY-KXu">
             <objects>
-                <viewController storyboardIdentifier="SetUsername" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Njp-vZ-Yex" customClass="SetUserViewController" customModule="ChatChat" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SetUsername" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Njp-vZ-Yex" customClass="SetUserViewController" customModule="nuschat" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="iBV-2G-6BF"/>
                         <viewControllerLayoutGuide type="bottom" id="GGC-xL-18u"/>

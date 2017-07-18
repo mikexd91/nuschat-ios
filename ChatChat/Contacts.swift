@@ -12,7 +12,7 @@ internal class Contacts{
     internal let id: String
     internal let name: String
     internal let email: String
-    internal let username: String
+    internal let username: String?
     internal let photoUrl: String
     internal let onlineStatus: String
     internal let ref: DatabaseReference?
@@ -32,7 +32,7 @@ internal class Contacts{
         let snapshotValue = snapshot.value as! [String: AnyObject]
         name = snapshotValue["name"] as! String
         email = snapshotValue["email"] as! String
-        username = snapshotValue["username"] as! String
+        username = (snapshotValue["username"] as? String)
         photoUrl = snapshotValue["photoUrl"] as! String
         ref = snapshot.ref
         onlineStatus = snapshotValue["onlineStatus"] as! String

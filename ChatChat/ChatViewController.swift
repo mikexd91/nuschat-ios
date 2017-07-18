@@ -28,7 +28,8 @@ final class ChatViewController: JSQMessagesViewController {
     var messages = [JSQMessage]()
     
     private lazy var messageRef: DatabaseReference = self.channelRef!.child("messages")
-    private lazy var channelLastMsgRef: DatabaseReference = self.channelRef!
+    private lazy var channelRefence: DatabaseReference = self.channelRef!
+    private lazy var onlineRef: DatabaseReference = self.channelRef!.child("online")
     private var newMessageRefHandle: DatabaseHandle?
     
     //Create a Firebase reference that tracks whether the local user is typing.
@@ -53,6 +54,7 @@ final class ChatViewController: JSQMessagesViewController {
     private var photoMessageMap = [String: JSQPhotoMediaItem]()
     private var updatedMessageRefHandle: DatabaseHandle?
     
+    var userCountBarButtonItem : UIBarButtonItem!
   // MARK: View Lifecycle
   
   override func viewDidLoad() {
@@ -61,9 +63,36 @@ final class ChatViewController: JSQMessagesViewController {
     collectionView!.collectionViewLayout.incomingAvatarViewSize = CGSize.zero
     collectionView!.collectionViewLayout.outgoingAvatarViewSize = CGSize.zero
     observeMessages()
+    
+    userCountBarButtonItem = UIBarButtonItem(title: "1",
+                                             style: .plain,
+                                             target: self,
+                                             action: #selector(userCountButtonDidTouch))
+    
+    userCountBarButtonItem.tintColor = self.view.tintColor
+    navigationItem.rightBarButtonItem = userCountBarButtonItem
+
 //    let tapGesture = UITapGestureRecognizer(target:
 //        self, action:#selector(tableViewTapped))
 //    collectionView.addGestureRecognizer(tapGesture)
+
+    Auth.auth().addStateDidChangeListener { auth, user in
+        guard let user = user else { return }
+        // 1 Create a child reference using a user’s uid, which is generated when Firebase creates an account.
+        let currentUserRef = self.onlineRef.child(user.uid)
+        // 2 Use this reference to save the current user’s email.
+        currentUserRef.setValue(user.email)
+        // 3 Call onDisconnectRemoveValue() on currentUserRef. This removes the value at the reference’s location after the connection to Firebase closes, for instance when a user quits your app. This is perfect for monitoring users who have gone offline.
+        currentUserRef.onDisconnectRemoveValue()
+    }
+    
+    onlineRef.observe(.value, with: { snapshot in
+        if snapshot.exists() {
+            self.userCountBarButtonItem?.title = "\(snapshot.childrenCount.description) Online"
+        } else {
+            self.userCountBarButtonItem?.title = "0 Online"
+        }
+    })
 
   }
   
@@ -80,6 +109,15 @@ final class ChatViewController: JSQMessagesViewController {
         if let refHandle = updatedMessageRefHandle {
             messageRef.removeObserver(withHandle: refHandle)
         }
+        
+        if let refHandle = updatedMessageRefHandle {
+            onlineRef.removeObserver(withHandle: refHandle)
+        }
+    }
+    
+    func userCountButtonDidTouch() {
+        print("they are online")
+        //        performSegue(withIdentifier: listToUsers, sender: nil)
     }
     
   // MARK: Collection view data source (and related) methods
@@ -187,17 +225,17 @@ final class ChatViewController: JSQMessagesViewController {
         //Finally, complete the “send” action and reset the input toolbar to empty.
         
         //add last message
-        self.channelLastMsgRef.observeSingleEvent(of: .value, with: { (snapshot) in
+        self.channelRefence.observeSingleEvent(of: .value, with: { (snapshot) in
             print(snapshot.value!)
             let lastMessageUpdate = ["/lastMessage": text]
             let lastMessageSenderUpdate = ["/lastMessageSender": senderDisplayName]
             let lastMessageSenderIdUpdate = ["/lastMessageSenderId": senderId]
-            self.channelLastMsgRef.updateChildValues(lastMessageUpdate)
-            self.channelLastMsgRef.updateChildValues(lastMessageSenderUpdate)
-            self.channelLastMsgRef.updateChildValues(lastMessageSenderIdUpdate)
+            self.channelRefence.updateChildValues(lastMessageUpdate)
+            self.channelRefence.updateChildValues(lastMessageSenderUpdate)
+            self.channelRefence.updateChildValues(lastMessageSenderIdUpdate)
         })
         
-//        channelLastMsgRef.setValue(messageItem)
+//        channelRefence.setValue(messageItem)
         finishSendingMessage()
         isTyping = false
     }

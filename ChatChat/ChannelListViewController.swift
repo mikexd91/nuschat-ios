@@ -9,13 +9,14 @@
 import UIKit
 import Firebase
 import SVProgressHUD
+import IGIdenticon
 
 enum Section: Int {
     case createNewChannelSection = 0
     case currentChannelSection
 }
 
-class ChannelListViewController: UITableViewController {
+class ChannelListViewController: UITableViewController, UISearchBarDelegate {
     
     // MARK: Properties
     //Add a simple property to store the sender’s name.
@@ -26,6 +27,8 @@ class ChannelListViewController: UITableViewController {
     
     //Create an empty array of Channel objects to store your channels.
     private var channels: [Channel] = []
+    var filteredChannels = [Channel]()
+    var inSearchMode = false
     
     //used to store a reference to the list of channels in the database
     private lazy var channelRef: DatabaseReference = Database.database().reference().child("channels")
@@ -35,6 +38,7 @@ class ChannelListViewController: UITableViewController {
     
     private lazy var userRef: DatabaseReference = Database.database().reference().child("users")
     
+    var searchField: UISearchBar = UISearchBar()
     
     @IBOutlet weak var channelTableView: UITableView!
     // MARK: View Lifecycle
@@ -45,8 +49,16 @@ class ChannelListViewController: UITableViewController {
         tap.cancelsTouchesInView = false
         self.view.addGestureRecognizer(tap)
         
-        title = "nuschat"
+        title = "#nuschat"
         
+        searchField.searchBarStyle = UISearchBarStyle.prominent
+        searchField.placeholder = " Search Channels..."
+        searchField.sizeToFit()
+        searchField.isTranslucent = false
+        searchField.backgroundImage = UIImage()
+        searchField.delegate = self
+        searchField.returnKeyType = UIReturnKeyType.done
+        tableView.tableHeaderView = searchField
         
         SVProgressHUD.show()
         observeChannels()
@@ -57,6 +69,9 @@ class ChannelListViewController: UITableViewController {
     deinit {
         if let refHandle = channelRefHandle {
             channelRef.removeObserver(withHandle: refHandle)
+        }
+        if let refHandle = channelRefHandle {
+            userRef.removeObserver(withHandle: refHandle)
         }
     }
     
@@ -106,7 +121,11 @@ class ChannelListViewController: UITableViewController {
             case .createNewChannelSection:
                 return 1
             case .currentChannelSection:
-                return channels.count
+                if inSearchMode{
+                    return filteredChannels.count
+                }else {
+                    return channels.count
+                }
             }
         } else {
             return 0
@@ -136,25 +155,33 @@ class ChannelListViewController: UITableViewController {
             }
         }else if (indexPath as NSIndexPath).section == Section.currentChannelSection.rawValue {
             if let createCurrentCell = cell as? ChannelListTableViewCell {
-                createCurrentCell.channelTitle.text = channels[(indexPath as NSIndexPath).row].name
+                let channelDisplayed: Channel!
+                if inSearchMode{
+                    channelDisplayed = filteredChannels[(indexPath as NSIndexPath).row]
+                }else{
+                    channelDisplayed = channels[(indexPath as NSIndexPath).row]
+                }
+                createCurrentCell.channelTitle.text = channelDisplayed.name
                 
-                if channels[(indexPath as NSIndexPath).row].lastMessage != ""{
-                    if channels[(indexPath as NSIndexPath).row].lastMessageSenderId == Auth.auth().currentUser?.uid {
-                        lastMessage = "You: \(channels[(indexPath as NSIndexPath).row].lastMessage)"
+                if channelDisplayed.lastMessage != ""{
+                    if channelDisplayed.lastMessageSenderId == Auth.auth().currentUser?.uid {
+                        lastMessage = "You: \(channelDisplayed.lastMessage)"
                     }else{
-                        lastMessage =  "\(channels[(indexPath as NSIndexPath).row].lastMessageSender): \(channels[(indexPath as NSIndexPath).row].lastMessage)"
+                        lastMessage =  "\(channelDisplayed.lastMessageSender): \(channelDisplayed.lastMessage)"
                     }
                 }else {
                     lastMessage = ""
                 }
                 createCurrentCell.channelLastMsg.text = lastMessage
-                
+
+                createCurrentCell.channelPhoto.image = Identicon().icon(from: channels[(indexPath as NSIndexPath).row].name, size: CGSize(width: 100, height: 100))
                 createCurrentCell.channelPhoto.layer.cornerRadius = (createCurrentCell.channelPhoto.frame.width / 2) //instead of let radius = CGRectGetWidth(self.frame) / 2
                 createCurrentCell.channelPhoto.layer.masksToBounds = true
             }
         }
         return cell
     }
+    
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         let userid = Auth.auth().currentUser?.uid
@@ -176,12 +203,20 @@ class ChannelListViewController: UITableViewController {
     // MARK: UITableViewDelegate
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //triggers the ShowChannel segue when the user taps a channel cell.
+        print(indexPath.section)
         if indexPath.section == Section.currentChannelSection.rawValue {
             let channel = channels[(indexPath as NSIndexPath).row]
             self.performSegue(withIdentifier: "ShowChannel", sender: channel)
         }else{
             print("not currentChannel")
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        if indexPath.section == Section.createNewChannelSection.rawValue {
+            return nil
+        }
+        return indexPath
     }
     
     
@@ -217,6 +252,25 @@ class ChannelListViewController: UITableViewController {
             chatVc.channel = channel
             chatVc.channelRef = channelRef.child(channel.id)
             chatVc.hidesBottomBarWhenPushed = true
+        }
+    }
+    
+    // MARK: search table
+    func searchBarSearchButtonClicked(_ searchField: UISearchBar) {
+        view.endEditing(true)
+    }
+    
+    func searchBar(_ searchField: UISearchBar, textDidChange searchText: String) {
+        if searchField.text == nil || searchField.text == "" {
+            inSearchMode = false
+            tableView.reloadData()
+            view.endEditing(true)
+        }else {
+            inSearchMode = true
+            let lower = searchField.text?.lowercased()
+            //$0 place holder
+            filteredChannels = channels.filter({$0.name.range(of: lower!) != nil})
+            tableView.reloadData()
         }
     }
     

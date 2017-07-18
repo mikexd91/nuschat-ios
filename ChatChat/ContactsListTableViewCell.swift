@@ -22,5 +22,7 @@ class ContactsListTableViewCell: UITableViewCell {
 
     @IBOutlet weak var profileStatus: UILabel!
     
+    @IBOutlet weak var searchField: UISearchBar!
+    
     @IBOutlet weak var staticLbl: UILabel!
 }

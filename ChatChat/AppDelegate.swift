@@ -18,6 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     var window: UIWindow?
     private lazy var userRef: DatabaseReference = Database.database().reference().child("users")
     var databaseRef: DatabaseReference!
+    let kUserDefault = UserDefaults.standard
     var filePath: String = String() {
         didSet {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshView"), object: nil)
@@ -28,6 +29,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         FirebaseApp.configure()
         GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
         GIDSignIn.sharedInstance().delegate = self
+        Database.database().isPersistenceEnabled = true
+        
         return true
     }
     
@@ -77,6 +80,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                     //Finally, set the name on this new channel, which is saved to Firebase automatically!
                     newUserRef.setValue(data)
                     nextStage = true
+                    
+                    self.kUserDefault.set(true, forKey: "isGoogleSignIn")
+                    self.kUserDefault.synchronize()
                 }
                 SVProgressHUD.dismiss()
                 let mainStoryboard: UIStoryboard = UIStoryboard(name:"Main", bundle: nil)

@@ -1,7 +1,7 @@
 platform :ios, "10.0"
 use_frameworks!
 
-target 'ChatChat' do
+target 'nuschat' do
 pod 'Firebase/Storage'
   pod 'Firebase/Auth'
   pod 'Firebase/Database'
@@ -9,6 +9,5 @@ pod 'Firebase/Storage'
   pod 'JSQMessagesViewController'
   pod 'SVProgressHUD'
   pod 'GoogleSignIn'
-  pod 'Fabric'
-  pod 'Crashlytics'
+  pod 'IGIdenticon'
 end
