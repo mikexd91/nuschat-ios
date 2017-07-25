@@ -9,15 +9,16 @@
 import Firebase
 
 internal class Contacts{
-    internal let id: String
-    internal let name: String
-    internal let email: String
+    internal let id: String?
+    internal let name: String?
+    internal let email: String?
     internal let username: String?
-    internal let photoUrl: String
-    internal let onlineStatus: String
+    internal let photoUrl: String?
+    internal let onlineStatus: String?
+    internal let pushToken: String?
     internal let ref: DatabaseReference?
     
-    init(id: String, name: String, ref: DatabaseReference, email: String, username: String, photoUrl: String, onlineStatus: String) {
+    init(id: String, name: String, ref: DatabaseReference, email: String, username: String, photoUrl: String, onlineStatus: String, pushToken: String) {
         self.id = id
         self.name = name
         self.email = email
@@ -25,17 +26,19 @@ internal class Contacts{
         self.photoUrl = photoUrl
         self.ref = ref
         self.onlineStatus = onlineStatus
+        self.pushToken = pushToken
     }
     
     init(snapshot: DataSnapshot) {
         id = snapshot.key
         let snapshotValue = snapshot.value as! [String: AnyObject]
-        name = snapshotValue["name"] as! String
-        email = snapshotValue["email"] as! String
+        name = snapshotValue["name"] as? String
+        email = snapshotValue["email"] as? String
         username = (snapshotValue["username"] as? String)
-        photoUrl = snapshotValue["photoUrl"] as! String
+        photoUrl = snapshotValue["photoUrl"] as? String
         ref = snapshot.ref
-        onlineStatus = snapshotValue["onlineStatus"] as! String
+        onlineStatus = snapshotValue["onlineStatus"] as? String
+        pushToken = snapshotValue["pushToken"] as? String
     }
     
 }

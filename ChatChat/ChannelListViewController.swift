@@ -10,13 +10,14 @@ import UIKit
 import Firebase
 import SVProgressHUD
 import IGIdenticon
+import GoogleSignIn
 
 enum Section: Int {
     case createNewChannelSection = 0
     case currentChannelSection
 }
 
-class ChannelListViewController: UITableViewController, UISearchBarDelegate {
+class ChannelListViewController: UITableViewController, UISearchBarDelegate, GIDSignInUIDelegate {
     
     // MARK: Properties
     //Add a simple property to store the sender’s name.
@@ -60,9 +61,16 @@ class ChannelListViewController: UITableViewController, UISearchBarDelegate {
         searchField.returnKeyType = UIReturnKeyType.done
         tableView.tableHeaderView = searchField
         
+        Messaging.messaging().subscribe(toTopic: "/channels")
+        
         SVProgressHUD.show()
         observeChannels()
+        UIApplication.shared.applicationIconBadgeNumber = 0
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        GIDSignIn.sharedInstance().uiDelegate = self
     }
     
     //stop observing database changes when the view controller dies by checking if channelRefHandle is set and then calling removeObserver(withHandle:).

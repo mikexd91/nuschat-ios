@@ -7,15 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		202755B41F0BD0B4002C2807 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 202755B31F0BD0B4002C2807 /* GoogleService-Info.plist */; };
 		202821E01F16207700C5F307 /* ChannelListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202821DF1F16207700C5F307 /* ChannelListTableViewCell.swift */; };
 		202821E21F17213500C5F307 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202821E11F17213500C5F307 /* ContactsViewController.swift */; };
 		202821E41F17483300C5F307 /* Contacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202821E31F17483300C5F307 /* Contacts.swift */; };
 		202821E81F1749E700C5F307 /* ContactsListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202821E71F1749E700C5F307 /* ContactsListTableViewCell.swift */; };
 		20662A151F14A85D002A7489 /* SetUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20662A141F14A85C002A7489 /* SetUserViewController.swift */; };
 		20662A171F15CE7F002A7489 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20662A161F15CE7F002A7489 /* SettingsTableViewController.swift */; };
+		20690A181F26FB31003EF7AB /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20690A171F26FB31003EF7AB /* UserNotifications.framework */; };
 		20A019F91F1C6C320025BC10 /* nuschatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20A019F81F1C6C320025BC10 /* nuschatUITests.swift */; };
 		20A01A011F1C6CA00025BC10 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20A01A001F1C6CA00025BC10 /* SnapshotHelper.swift */; };
+		20B5CFB51F1DB5BE00444543 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 20B5CFB41F1DB5BE00444543 /* GoogleService-Info.plist */; };
 		459780D31D6465FB007BE66F /* UIImage+Gif.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459780D21D6465FB007BE66F /* UIImage+Gif.swift */; };
 		459E535F1D4BF36A00E675A5 /* License in Resources */ = {isa = PBXBuildFile; fileRef = 459E535E1D4BF36A00E675A5 /* License */; };
 		45A0D8FA1D49419500F26729 /* ChannelListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A0D8F91D49419500F26729 /* ChannelListViewController.swift */; };
@@ -43,17 +44,18 @@
 /* Begin PBXFileReference section */
 		0557DFEA3BD186D8D3D7051F /* Pods-Chatchat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chatchat.release.xcconfig"; path = "Pods/Target Support Files/Pods-Chatchat/Pods-Chatchat.release.xcconfig"; sourceTree = "<group>"; };
 		1FF7EA5C69CFB0AFCC0067BA /* Pods-ChatChat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatChat.release.xcconfig"; path = "Pods/Target Support Files/Pods-ChatChat/Pods-ChatChat.release.xcconfig"; sourceTree = "<group>"; };
-		202755B31F0BD0B4002C2807 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		202821DF1F16207700C5F307 /* ChannelListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChannelListTableViewCell.swift; sourceTree = "<group>"; };
 		202821E11F17213500C5F307 /* ContactsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsViewController.swift; sourceTree = "<group>"; };
 		202821E31F17483300C5F307 /* Contacts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contacts.swift; sourceTree = "<group>"; };
 		202821E71F1749E700C5F307 /* ContactsListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsListTableViewCell.swift; sourceTree = "<group>"; };
 		20662A141F14A85C002A7489 /* SetUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetUserViewController.swift; sourceTree = "<group>"; };
 		20662A161F15CE7F002A7489 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
+		20690A171F26FB31003EF7AB /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		20A019F61F1C6C320025BC10 /* nuschatUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = nuschatUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		20A019F81F1C6C320025BC10 /* nuschatUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nuschatUITests.swift; sourceTree = "<group>"; };
 		20A019FA1F1C6C320025BC10 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		20A01A001F1C6CA00025BC10 /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnapshotHelper.swift; sourceTree = "<group>"; };
+		20B5CFB41F1DB5BE00444543 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		260224A06A0DAAEF802437F5 /* Pods-nuschat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-nuschat.debug.xcconfig"; path = "Pods/Target Support Files/Pods-nuschat/Pods-nuschat.debug.xcconfig"; sourceTree = "<group>"; };
 		4570C5E21D54FD11007946D9 /* ChatChat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ChatChat.entitlements; sourceTree = "<group>"; };
 		459780D21D6465FB007BE66F /* UIImage+Gif.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Gif.swift"; sourceTree = "<group>"; };
@@ -90,6 +92,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				20690A181F26FB31003EF7AB /* UserNotifications.framework in Frameworks */,
 				9D6512BF23B6C41A5C95FFBF /* Pods_nuschat.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -132,6 +135,7 @@
 		97CEDEF6DA0B51A3522B766A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				20690A171F26FB31003EF7AB /* UserNotifications.framework */,
 				E8DDF38C1BEF88E200B5F45A /* Social.framework */,
 				E8DDF38A1BEF88DC00B5F45A /* Accounts.framework */,
 				DB40A0626B0EAEA6C1C538A3 /* Pods_nuschat.framework */,
@@ -190,9 +194,9 @@
 			children = (
 				BB1E97061C147BAA00E34853 /* ChatChat-Bridging-Header.h */,
 				BB5355791BEF765800321277 /* AppDelegate.swift */,
+				20B5CFB41F1DB5BE00444543 /* GoogleService-Info.plist */,
 				459780D21D6465FB007BE66F /* UIImage+Gif.swift */,
 				BB5355851BEF765800321277 /* Info.plist */,
-				202755B31F0BD0B4002C2807 /* GoogleService-Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -272,6 +276,9 @@
 						DevelopmentTeam = C3D428C667;
 						LastSwiftMigration = 0800;
 						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
 							com.apple.Keychain = {
 								enabled = 1;
 							};
@@ -314,8 +321,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				BB5355841BEF765800321277 /* LaunchScreen.storyboard in Resources */,
-				202755B41F0BD0B4002C2807 /* GoogleService-Info.plist in Resources */,
 				BB5355811BEF765800321277 /* Assets.xcassets in Resources */,
+				20B5CFB51F1DB5BE00444543 /* GoogleService-Info.plist in Resources */,
 				459E535F1D4BF36A00E675A5 /* License in Resources */,
 				BB53557F1BEF765800321277 /* Main.storyboard in Resources */,
 			);

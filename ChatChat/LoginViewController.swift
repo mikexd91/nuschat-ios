@@ -54,10 +54,6 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate {
         GIDSignIn.sharedInstance().uiDelegate = self
         //        GIDSignIn.sharedInstance().signIn()
 
-        if kUserDefault.bool(forKey: "isGoogleSignIn") {
-            googleSignIn.isEnabled = false
-            GIDSignIn.sharedInstance().signIn()
-        }
     }
     
     

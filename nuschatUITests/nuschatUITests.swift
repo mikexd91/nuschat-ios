@@ -33,4 +33,39 @@ class nuschatUITests: XCTestCase {
 
     }
     
+    
+    func testExample2() {
+        let app = XCUIApplication()
+//        setupSnapshot(app)
+        app.launch()
+        app.buttons["googleLogin"].tap()
+        
+        let tabBarsQuery = app.tabBars
+//        tabBarsQuery.buttons["Contacts"].tap()
+//        
+        let tablesQuery2 = app.tables
+//        let searchContactsSearchField = tablesQuery2.searchFields[" Search Contacts..."]
+//        searchContactsSearchField.tap()
+//        searchContactsSearchField.typeText("m")
+//        searchContactsSearchField.typeText("s")
+//        searchContactsSearchField.tap()
+//        app.typeText("")
+//        tabBarsQuery.buttons["Recents"].tap()
+        
+        let tablesQuery = tablesQuery2
+        tablesQuery.staticTexts["sabre: La"].tap()
+        
+        let toolbarsQuery = app.toolbars
+        let newMessageTextView = toolbarsQuery.textViews["New Message"]
+        newMessageTextView.tap()
+        newMessageTextView.typeText("hello")
+        toolbarsQuery.buttons["Send"].tap()
+        
+        let nuschatButton = app.navigationBars["nba"].buttons["#nuschat"]
+        nuschatButton.tap()
+        tablesQuery.staticTexts["You: Hello"].swipeLeft()
+        nuschatButton.tap()
+
+    }
+    
 }

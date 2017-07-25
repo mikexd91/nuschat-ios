@@ -27,7 +27,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.650980715452-qljh3a8k6h3edj0c1d74frf6l5me53no</string>
+				<string>com.googleusercontent.apps.273113374416-icd2f8icuvt55idmlfcrjcebmdj0ko53</string>
 			</array>
 		</dict>
 	</array>
@@ -39,6 +39,10 @@
 	<string>We access your camera to attach images to meesages</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>We access your photos to attach images to meesages</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
