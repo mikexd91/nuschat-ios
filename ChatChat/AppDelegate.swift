@@ -54,17 +54,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, UNUser
         
         pushToken = Messaging.messaging().fcmToken
         print("FCM token: \(pushToken ?? "")")
-        
+        /*
         let signInMethod = kUserDefault.bool(forKey: "isGoogleSignIn")
         print(signInMethod)
         if (signInMethod){
+            GIDSignIn.sharedInstance().signInSilently()
             let mainStoryboard: UIStoryboard = UIStoryboard(name:"Main", bundle: nil)
             let viewController = mainStoryboard.instantiateViewController(withIdentifier: "vcLogin") as UIViewController
             self.window?.rootViewController = viewController
             self.window?.makeKeyAndVisible()
-            //GIDSignIn.sharedInstance().signIn()
+            
             //self.window?.rootViewController?.performSegue(withIdentifier: "SignInToChat", sender: nil)
         }
+ */
         return true
     }
     
@@ -124,8 +126,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, UNUser
                 if nextStage {
                     self.window?.rootViewController?.performSegue(withIdentifier: "SetUsername", sender: nil)
                 } else {
-                    
-                    //self.window?.rootViewController?.performSegue(withIdentifier: "SignInToChat", sender: nil)
+                    self.window?.rootViewController?.performSegue(withIdentifier: "SignInToChat", sender: nil)
                 }
             })
             

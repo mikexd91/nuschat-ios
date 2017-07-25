@@ -14,6 +14,7 @@
 		20662A151F14A85D002A7489 /* SetUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20662A141F14A85C002A7489 /* SetUserViewController.swift */; };
 		20662A171F15CE7F002A7489 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20662A161F15CE7F002A7489 /* SettingsTableViewController.swift */; };
 		20690A181F26FB31003EF7AB /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20690A171F26FB31003EF7AB /* UserNotifications.framework */; };
+		208930791F2749A100560864 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB5355851BEF765800321277 /* Info.plist */; };
 		20A019F91F1C6C320025BC10 /* nuschatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20A019F81F1C6C320025BC10 /* nuschatUITests.swift */; };
 		20A01A011F1C6CA00025BC10 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20A01A001F1C6CA00025BC10 /* SnapshotHelper.swift */; };
 		20B5CFB51F1DB5BE00444543 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 20B5CFB41F1DB5BE00444543 /* GoogleService-Info.plist */; };
@@ -322,6 +323,7 @@
 			files = (
 				BB5355841BEF765800321277 /* LaunchScreen.storyboard in Resources */,
 				BB5355811BEF765800321277 /* Assets.xcassets in Resources */,
+				208930791F2749A100560864 /* Info.plist in Resources */,
 				20B5CFB51F1DB5BE00444543 /* GoogleService-Info.plist in Resources */,
 				459E535F1D4BF36A00E675A5 /* License in Resources */,
 				BB53557F1BEF765800321277 /* Main.storyboard in Resources */,

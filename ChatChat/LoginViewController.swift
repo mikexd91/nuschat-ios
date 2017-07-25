@@ -27,7 +27,7 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate {
     }
     @IBAction func googleSignIn(_ sender: GIDSignInButton) {
         SVProgressHUD.show()
-        GIDSignIn.sharedInstance().signIn()
+        GIDSignIn.sharedInstance().signInSilently()
         googleSignIn.isEnabled = false
         //        facebookSignIn.isEnabled = false
     }
@@ -53,9 +53,14 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate {
     override func viewDidLoad() {
         GIDSignIn.sharedInstance().uiDelegate = self
         //        GIDSignIn.sharedInstance().signIn()
+        if kUserDefault.bool(forKey: "isGoogleSignIn") {
+                     googleSignIn.isEnabled = false
+                        GIDSignIn.sharedInstance().signIn()
+        }
 
     }
     
+
     
     
 }

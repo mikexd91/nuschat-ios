@@ -17,7 +17,7 @@ enum Section: Int {
     case currentChannelSection
 }
 
-class ChannelListViewController: UITableViewController, UISearchBarDelegate, GIDSignInUIDelegate {
+class ChannelListViewController: UITableViewController, UISearchBarDelegate{
     
     // MARK: Properties
     //Add a simple property to store the sender’s name.
@@ -70,7 +70,7 @@ class ChannelListViewController: UITableViewController, UISearchBarDelegate, GID
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        GIDSignIn.sharedInstance().uiDelegate = self
+
     }
     
     //stop observing database changes when the view controller dies by checking if channelRefHandle is set and then calling removeObserver(withHandle:).
