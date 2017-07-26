@@ -11,6 +11,7 @@ import Firebase
 import GoogleSignIn
 import SVProgressHUD
 import UserNotifications
+import FBSDKCoreKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, UNUserNotificationCenterDelegate, MessagingDelegate {
@@ -67,17 +68,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, UNUser
             //self.window?.rootViewController?.performSegue(withIdentifier: "SignInToChat", sender: nil)
         }
  */
+        
+        FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+        
+        
         return true
     }
     
-    @available(iOS 9.0, *)
-    func application(_ application: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any])
-        -> Bool {
-            return GIDSignIn.sharedInstance().handle(url,sourceApplication:options[UIApplicationOpenURLOptionsKey.sourceApplication] as? String,annotation: [:])
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+        if(url.scheme!.isEqual("fb183677615483082")) {
+            return FBSDKApplicationDelegate.sharedInstance().application(app, open: url, options: options)
+            
+        } else {
+            return GIDSignIn.sharedInstance().handle(url as URL!,
+                                                     sourceApplication: options[UIApplicationOpenURLOptionsKey.sourceApplication] as! String!,
+                                                     annotation: options[UIApplicationOpenURLOptionsKey.annotation])
+        }
     }
+    
     
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error?) {
         // ...
+
         SVProgressHUD.show()
         var nextStage: Bool = false
         if let error = error {
@@ -118,9 +130,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, UNUser
                     newUserRef.setValue(data)
                     nextStage = true
                     
-                    self.kUserDefault.set(true, forKey: "isGoogleSignIn")
-                    self.kUserDefault.synchronize()
                 }
+                self.kUserDefault.set(true, forKey: "isGoogleSignIn")
+                self.kUserDefault.set(false, forKey: "isFacebookSignIn")
+                self.kUserDefault.synchronize()
+                
                 SVProgressHUD.dismiss()
                 let mainStoryboard: UIStoryboard = UIStoryboard(name:"Main", bundle: nil)
                 if nextStage {

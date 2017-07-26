@@ -40,25 +40,34 @@
                                     </mask>
                                 </variation>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8bR-eQ-2a2">
-                                <rect key="frame" x="78" y="544" width="219" height="50"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <accessibility key="accessibilityConfiguration" identifier="googleLogin"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eYp-4T-Jfx">
+                                <rect key="frame" x="86" y="567" width="200" height="50"/>
+                                <color key="backgroundColor" red="0.86725288629999997" green="0.37017792459999999" blue="0.27071863410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="iKs-O0-Kph"/>
-                                    <constraint firstAttribute="width" constant="219" id="zDV-W8-Ore"/>
+                                    <constraint firstAttribute="height" constant="50" id="FS5-in-DJ1"/>
+                                    <constraint firstAttribute="width" constant="200" id="H4j-nN-e5V"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="17"/>
                                 <state key="normal" title="Google Login">
-                                    <color key="titleColor" red="0.17254901959999999" green="0.37647058820000001" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
-                                        <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <action selector="googleSignIn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="9cd-Ty-noP"/>
+                                    <action selector="googleSignIn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vX0-zL-LdJ"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jtq-Lk-xB9">
+                                <rect key="frame" x="86" y="507" width="200" height="50"/>
+                                <color key="backgroundColor" red="0.17254901959999999" green="0.37647058820000001" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="0J9-0u-ZsC"/>
+                                    <constraint firstAttribute="height" constant="50" id="tzv-Y4-TfH"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="17"/>
+                                <state key="normal" title="Facebook Login">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="facebookSignIn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="fpO-HM-pPe"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -66,18 +75,23 @@
                         <constraints>
                             <constraint firstItem="MbS-9o-xa9" firstAttribute="trailing" secondItem="eLe-5k-MHy" secondAttribute="trailing" id="8f2-1m-sYo"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="eLe-5k-MHy" secondAttribute="bottom" id="8ye-zo-ea7"/>
+                            <constraint firstItem="eYp-4T-Jfx" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="70" id="AMg-JT-8Yv"/>
                             <constraint firstItem="eLe-5k-MHy" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="Cyp-e8-JLk"/>
-                            <constraint firstAttribute="bottom" secondItem="8bR-eQ-2a2" secondAttribute="bottom" constant="73" id="ICj-N1-cNE"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Jtq-Lk-xB9" secondAttribute="trailing" constant="70" id="KkU-oe-cHr"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="eYp-4T-Jfx" secondAttribute="bottom" constant="50" id="OHn-wB-Myy"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="eYp-4T-Jfx" secondAttribute="trailing" constant="70" id="RhH-lO-Vhu"/>
                             <constraint firstItem="MbS-9o-xa9" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="121" id="aUv-J9-u3t"/>
                             <constraint firstAttribute="trailing" secondItem="eLe-5k-MHy" secondAttribute="trailing" id="ghD-Ls-Ils"/>
+                            <constraint firstItem="eYp-4T-Jfx" firstAttribute="top" secondItem="Jtq-Lk-xB9" secondAttribute="bottom" constant="10" id="iQ4-Ti-Vv7"/>
+                            <constraint firstItem="Jtq-Lk-xB9" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="70" id="mLs-Cc-Zit"/>
                             <constraint firstItem="MbS-9o-xa9" firstAttribute="leading" secondItem="eLe-5k-MHy" secondAttribute="leading" id="ne1-HG-QP5"/>
-                            <constraint firstItem="MbS-9o-xa9" firstAttribute="centerX" secondItem="8bR-eQ-2a2" secondAttribute="centerX" id="o5e-Ya-Njp"/>
                             <constraint firstItem="eLe-5k-MHy" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="qAj-fx-jB1"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="bottomLayoutGuideConstraint" destination="8ye-zo-ea7" id="v4X-SU-djS"/>
-                        <outlet property="googleSignIn" destination="8bR-eQ-2a2" id="qZx-Gp-4Zs"/>
+                        <outlet property="facebookSignIn" destination="Jtq-Lk-xB9" id="4hV-uq-lNJ"/>
+                        <outlet property="googleSignIn" destination="eYp-4T-Jfx" id="nKK-VW-Nme"/>
                         <outlet property="loginView" destination="8bC-Xf-vdC" id="L76-jj-grK"/>
                         <outlet property="nameField" destination="5Ud-se-jh6" id="VUy-ik-PQf"/>
                         <segue destination="Njp-vZ-Yex" kind="show" identifier="SetUsername" id="JPV-5W-Fui"/>
@@ -86,7 +100,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="306" y="408"/>
+            <point key="canvasLocation" x="304.80000000000001" y="407.0464767616192"/>
         </scene>
         <!--Contacts View Controller-->
         <scene sceneID="AYY-ci-iVS">

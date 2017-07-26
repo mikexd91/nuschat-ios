@@ -10,7 +10,8 @@ import UIKit
 import Firebase
 
 class SettingsTableViewController: UITableViewController {
-
+    let kUserDefault = UserDefaults.standard
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -42,8 +43,10 @@ class SettingsTableViewController: UITableViewController {
         if indexPath.section == 0 && indexPath.row == 0 {
             let firebaseAuth = Auth.auth()
             do {
-                try firebaseAuth.signOut()
                 self.performSegue(withIdentifier: "unwindToViewController", sender: self)
+                try firebaseAuth.signOut()
+                kUserDefault.set(false, forKey: "isGoogleSignIn")
+                kUserDefault.set(false, forKey: "isFacebookSignIn")
             } catch let signOutError as NSError {
                 print ("Error signing out: %@", signOutError)
             }
